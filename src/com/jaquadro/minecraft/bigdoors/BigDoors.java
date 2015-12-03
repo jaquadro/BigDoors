@@ -1,10 +1,14 @@
 package com.jaquadro.minecraft.bigdoors;
 
+import com.jaquadro.minecraft.bigdoors.block.BlockMetalDoor3x3;
 import com.jaquadro.minecraft.bigdoors.block.Door3x3;
 import com.jaquadro.minecraft.bigdoors.block.movement.Door3x3Movement;
+import com.jaquadro.minecraft.bigdoors.block.sound.RustyDoorSound;
 import com.jaquadro.minecraft.bigdoors.block.tile.Door3x3Tile;
+import com.jaquadro.minecraft.bigdoors.block.tile.MetalDoor3x3Tile;
 import com.jaquadro.minecraft.bigdoors.core.CommonProxy;
 import com.jaquadro.minecraft.bigdoors.item.ItemDoor3x3;
+import com.jaquadro.minecraft.bigdoors.item.ItemMetalDoor3x3;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -26,6 +30,7 @@ public class BigDoors
     public static final String SOURCE_PATH = "com.jaquadro.minecraft.bigdoors.";
 
     private static Block door3x3;
+    private static Block metalDoors3x3;
 
     @Mod.Instance(MOD_ID)
     public static BigDoors instance;
@@ -36,10 +41,15 @@ public class BigDoors
     @Mod.EventHandler
     public void preInit (FMLPreInitializationEvent event) {
         DoorRegistry.registerMovement("door3x3", new Door3x3Movement());
+        DoorRegistry.registerSound("rustyDoor", new RustyDoorSound());
 
         door3x3 = new Door3x3();
         GameRegistry.registerBlock(door3x3, ItemDoor3x3.class, "door3x3");
         GameRegistry.registerTileEntity(Door3x3Tile.class, "door3x3");
+
+        metalDoors3x3 = new BlockMetalDoor3x3();
+        GameRegistry.registerBlock(metalDoors3x3, ItemMetalDoor3x3.class, "metalDoors3x3");
+        GameRegistry.registerTileEntity(MetalDoor3x3Tile.class, "metalDoors3x3");
 
         proxy.init();
     }
@@ -49,5 +59,8 @@ public class BigDoors
         for (int i = 0; i < BlockWood.field_150096_a.length; i++) {
             GameRegistry.addRecipe(new ItemStack(door3x3, 1, i), "xx", "yy", 'x', Items.wooden_door, 'y', new ItemStack(Blocks.planks, 1, i));
         }
+
+        GameRegistry.addRecipe(new ItemStack(metalDoors3x3, 1, 0), "xx", "yy", 'x', Items.iron_door, 'y', Items.iron_ingot);
+        GameRegistry.addRecipe(new ItemStack(metalDoors3x3, 1, 1), "xxx", "xyx", "xxx", 'x', Blocks.dirt, 'y', new ItemStack(metalDoors3x3, 1, 0));
     }
 }

@@ -4,3 +4,6 @@ tile.door3x3.birch.name=Large Birch Double Doors
 tile.door3x3.jungle.name=Large Jungle Double Doors
 tile.door3x3.acacia.name=Large Acacia Double Doors
 tile.door3x3.big_oak.name=Large Dark Oak Double Doors
+
+tile.metalDoor3x3.iron.name=Large Iron Double Doors
+tile.metalDoor3x3.rusty.name=Large Rusty Iron Double Doors

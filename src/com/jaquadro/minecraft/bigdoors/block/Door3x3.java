@@ -12,7 +12,6 @@ import net.malisis.core.util.chunkcollision.IChunkCollidable;
 import net.malisis.core.util.chunklistener.IBlockListener;
 import net.malisis.doors.door.DoorState;
 import net.malisis.doors.door.block.Door;
-import net.malisis.doors.door.tileentity.DoorTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWood;
 import net.minecraft.block.ITileEntityProvider;
@@ -41,12 +40,16 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     public static int renderId;
 
     @SideOnly(Side.CLIENT)
-    IIcon[] icons;
+    protected IIcon[] icons;
 
     private AxisAlignedBB defaultBoundingBox = AxisAlignedBB.getBoundingBox(-1, 0, 1 - Door.DOOR_WIDTH, 2, 3, 1);
 
     public Door3x3 () {
-        super(Material.wood);
+        this(Material.wood);
+    }
+
+    protected Door3x3 (Material material) {
+        super(material);
 
         setHardness(5.0f);
         setResistance(10.0f);
@@ -77,7 +80,7 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
         if (tile == null)
             return getIcon(side, 0);
 
-        return getIcon(side, tile.getWoodType());
+        return getIcon(side, tile.getDoorType());
     }
 
     @Override
@@ -228,7 +231,7 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
         for (int i = 0; i < count; i++) {
             Item item = getItemDropped(metadata, world.rand, fortune);
             if (item != null)
-                items.add(new ItemStack(item, 1, tile.getWoodType()));
+                items.add(new ItemStack(item, 1, tile.getDoorType()));
         }
 
         return items;

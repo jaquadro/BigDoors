@@ -16,10 +16,14 @@ import net.minecraft.world.World;
 public class ItemDoor3x3 extends ItemMultiTexture
 {
     @SideOnly(Side.CLIENT)
-    private IIcon[] icons;
+    protected IIcon[] icons;
 
     public ItemDoor3x3 (Block block) {
-        super(block, block, BlockWood.field_150096_a);
+        this(block, BlockWood.field_150096_a);
+    }
+
+    protected ItemDoor3x3 (Block block, String[] names) {
+        super(block, block, names);
     }
 
     @SideOnly(Side.CLIENT)
@@ -35,7 +39,7 @@ public class ItemDoor3x3 extends ItemMultiTexture
 
         Door3x3Tile tile = (Door3x3Tile)world.getTileEntity(x, y, z);
         if (tile != null)
-            tile.setWoodType(metadata);
+            tile.setDoorType(metadata);
 
         return true;
     }

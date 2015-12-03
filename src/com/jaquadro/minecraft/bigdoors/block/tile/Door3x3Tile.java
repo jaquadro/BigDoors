@@ -34,11 +34,11 @@ public class Door3x3Tile extends DoorTileEntity
         setDescriptor(descriptor);
     }
 
-    public void setWoodType (int meta) {
+    public void setDoorType (int meta) {
         woodType = meta;
     }
 
-    public int getWoodType () {
+    public int getDoorType () {
         return woodType;
     }
 
