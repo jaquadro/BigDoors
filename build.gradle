@@ -48,7 +48,7 @@ repositories {
 }
 
 dependencies {
-    compile 'net.malisis:malisiscore:1.7.10-0.12.4:dev'
+    compile 'net.malisis:malisiscore:1.7.10-0.14.0:dev'
     //compile 'net.malisis:malisisdoors:1.7.10-1.9.1:dev'
 }
 
