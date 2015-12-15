@@ -76,6 +76,11 @@ task deobfJar(type: Jar) {
     classifier = 'dev'
 }
 
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
 artifacts {
     archives deobfJar
 }
