@@ -1,5 +1,5 @@
 package com.jaquadro.minecraft.bigdoors.item;
-
+/*
 import com.jaquadro.minecraft.bigdoors.BigDoors;
 import com.jaquadro.minecraft.bigdoors.block.BlockMetalDoor3x3;
 import cpw.mods.fml.relauncher.Side;
@@ -22,3 +22,4 @@ public class ItemMetalDoor3x3 extends ItemDoor3x3
             icons[i] = register.registerIcon(BigDoors.MOD_ID + ":doors_" + BlockMetalDoor3x3.names[i]);
     }
 }
+*/

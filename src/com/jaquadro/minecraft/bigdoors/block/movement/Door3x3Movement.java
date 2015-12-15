@@ -6,17 +6,17 @@ import net.malisis.core.renderer.animation.Animation;
 import net.malisis.core.renderer.animation.transformation.Rotation;
 import net.malisis.core.renderer.animation.transformation.Transformation;
 import net.malisis.core.renderer.model.MalisisModel;
-import net.malisis.doors.door.DoorState;
-import net.malisis.doors.door.block.Door;
-import net.malisis.doors.door.movement.IDoorMovement;
-import net.malisis.doors.door.tileentity.DoorTileEntity;
+import net.malisis.doors.DoorState;
+import net.malisis.doors.block.Door;
+import net.malisis.doors.movement.IDoorMovement;
+import net.malisis.doors.tileentity.DoorTileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
 public class Door3x3Movement implements IDoorMovement
 {
 
     @Override
-    public AxisAlignedBB getBoundingBox (DoorTileEntity doorTileEntity, boolean b, BoundingBoxType boundingBoxType) {
+    public AxisAlignedBB getOpenBoundingBox (DoorTileEntity doorTileEntity, boolean left, BoundingBoxType boundingBoxType) {
         return null;
     }
 

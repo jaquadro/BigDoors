@@ -1,8 +1,8 @@
 package com.jaquadro.minecraft.bigdoors.block.sound;
 
 import com.jaquadro.minecraft.bigdoors.BigDoors;
-import net.malisis.doors.door.DoorState;
-import net.malisis.doors.door.sound.IDoorSound;
+import net.malisis.doors.DoorState;
+import net.malisis.doors.sound.IDoorSound;
 
 public class RustyDoorSound implements IDoorSound
 {

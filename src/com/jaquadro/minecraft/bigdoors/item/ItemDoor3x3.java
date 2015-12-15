@@ -1,5 +1,6 @@
 package com.jaquadro.minecraft.bigdoors.item;
 
+/*
 import com.jaquadro.minecraft.bigdoors.BigDoors;
 import com.jaquadro.minecraft.bigdoors.block.tile.Door3x3Tile;
 import cpw.mods.fml.relauncher.Side;
@@ -52,3 +53,4 @@ public class ItemDoor3x3 extends ItemMultiTexture
             icons[i] = register.registerIcon(BigDoors.MOD_ID + ":doors_" + BlockWood.field_150096_a[i]);
     }
 }
+*/

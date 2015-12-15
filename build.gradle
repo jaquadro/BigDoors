@@ -1,32 +1,31 @@
-buildscript {
+/*buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.0-SNAPSHOT'
     }
 }
+apply plugin: 'net.minecraftforge.gradle.forge'*/
 
-apply plugin: 'forge'
+plugins {
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
+}
 
-version = "1.7.10-1.1.0"
+version = "1.8-1.2.0"
 group= "com.jaquadro.minecraft.bigdoors" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "BigDoors"
 
 minecraft {
-    version = "1.7.10-10.13.3.1408-1.7.10"
-    assetDir = "runtime/assets"
+    version = "1.8-11.14.4.1577"
+    runDir = "runtime-1.8"
 
     replace '@VERSION@', project.version
-    mappings = "stable_12"
+    mappings = "snapshot_20150711"
 }
 
 sourceSets.main {
@@ -48,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    compile 'net.malisis:malisiscore:1.7.10-0.14.0:dev'
+    compile 'net.malisis:malisiscore:1.8-1.2.0:dev'
     //compile 'net.malisis:malisisdoors:1.7.10-1.9.1:dev'
 }
 
