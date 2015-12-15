@@ -8,7 +8,6 @@ import com.jaquadro.minecraft.bigdoors.block.tile.Door3x3Tile;
 import com.jaquadro.minecraft.bigdoors.block.tile.MetalDoor3x3Tile;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -23,11 +22,11 @@ public class Registers
         bigDoorOak = new Door3x3(Door3x3.Type.OAK);
         bigDoorOak.register();
 
-        bigDoorBirch = new Door3x3(Door3x3.Type.BIRCH);
-        bigDoorBirch.register();
-
         bigDoorSpruce = new Door3x3(Door3x3.Type.SPRUCE);
         bigDoorSpruce.register();
+
+        bigDoorBirch = new Door3x3(Door3x3.Type.BIRCH);
+        bigDoorBirch.register();
 
         bigDoorJungle = new Door3x3(Door3x3.Type.JUNGLE);
         bigDoorJungle.register();
@@ -41,8 +40,8 @@ public class Registers
         GameRegistry.registerTileEntity(Door3x3Tile.class, "door3x3");
 
         GameRegistry.addRecipe(new ItemStack(bigDoorOak), "xx", "yy", 'x', Items.oak_door, 'y', new ItemStack(Blocks.planks, 1, 0));
-        GameRegistry.addRecipe(new ItemStack(bigDoorBirch), "xx", "yy", 'x', Items.birch_door, 'y', new ItemStack(Blocks.planks, 1, 1));
-        GameRegistry.addRecipe(new ItemStack(bigDoorSpruce), "xx", "yy", 'x', Items.spruce_door, 'y', new ItemStack(Blocks.planks, 1, 2));
+        GameRegistry.addRecipe(new ItemStack(bigDoorSpruce), "xx", "yy", 'x', Items.spruce_door, 'y', new ItemStack(Blocks.planks, 1, 1));
+        GameRegistry.addRecipe(new ItemStack(bigDoorBirch), "xx", "yy", 'x', Items.birch_door, 'y', new ItemStack(Blocks.planks, 1, 2));
         GameRegistry.addRecipe(new ItemStack(bigDoorJungle), "xx", "yy", 'x', Items.jungle_door, 'y', new ItemStack(Blocks.planks, 1, 3));
         GameRegistry.addRecipe(new ItemStack(bigDoorAcacia), "xx", "yy", 'x', Items.acacia_door, 'y', new ItemStack(Blocks.planks, 1, 4));
         GameRegistry.addRecipe(new ItemStack(bigDoorDarkOak), "xx", "yy", 'x', Items.dark_oak_door, 'y', new ItemStack(Blocks.planks, 1, 5));

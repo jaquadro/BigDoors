@@ -22,13 +22,12 @@ public class BlockMetalDoor3x3 extends Door3x3
         public String name;
         public Item door;
 
-        private Type (String name, Item door) {
+        Type (String name, Item door) {
             this.name = name;
             this.door = door;
         }
     }
 
-    //public static final String[] names = new String[] {"iron", "rusty"};
     private Type type;
 
     public BlockMetalDoor3x3 (Type type) {
@@ -52,15 +51,6 @@ public class BlockMetalDoor3x3 extends Door3x3
     public void createIconProvider (Object object) {
         iconProvider = new Door3x3IconProvider(type);
     }
-
-    /*@Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons (IIconRegister register) {
-        icons = new IIcon[names.length];
-
-        for (int i = 0; i < icons.length; i++)
-            icons[i] = register.registerIcon(BigDoors.MOD_ID + ":doors_" + names[i] + "_3x3");
-    }*/
 
     @Override
     public TileEntity createNewTileEntity (World world, int metadata) {

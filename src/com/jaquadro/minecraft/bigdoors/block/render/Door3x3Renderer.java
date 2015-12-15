@@ -10,11 +10,9 @@ import net.malisis.core.renderer.RenderType;
 import net.malisis.core.renderer.animation.Animation;
 import net.malisis.core.renderer.animation.AnimationRenderer;
 import net.malisis.core.renderer.element.Shape;
-import net.malisis.core.renderer.element.Vertex;
 import net.malisis.core.renderer.element.shape.Cube;
 import net.malisis.core.renderer.model.MalisisModel;
 import net.malisis.doors.block.Door;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
 
@@ -27,8 +25,6 @@ public class Door3x3Renderer extends MalisisRenderer
     private RenderParameters rp;
     private AnimationRenderer ar = new AnimationRenderer();
     private Door3x3Tile tile;
-    private boolean overrideAlpha;
-    private int overrideAlphaValue;
 
     private EnumFacing direction;
 
@@ -72,8 +68,6 @@ public class Door3x3Renderer extends MalisisRenderer
         if (super.tileEntity == null)
             return;
 
-        //rp.interpolateUV.set(true);
-
         if (renderType == RenderType.BLOCK)
             return;
 
@@ -113,65 +107,4 @@ public class Door3x3Renderer extends MalisisRenderer
 
         rp.brightness.set(block.getMixedBrightnessForBlock(world, pos));
     }
-
-    /*@Override
-    public void renderDestroyProgress()
-    {
-        if (destroyBlockProgress != null)
-            overrideTexture = damagedIcons[destroyBlockProgress.getPartialBlockDamage()];
-
-        if (renderType == RenderType.TESR_WORLD) {
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glEnable(GL11.GL_COLOR_MATERIAL);
-            GL11.glShadeModel(GL11.GL_SMOOTH);
-            OpenGlHelper.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_SRC_COLOR, GL11.GL_ONE, GL11.GL_ZERO);
-            GL11.glAlphaFunc(GL11.GL_GREATER, 0.1F);
-        }
-
-        overrideAlpha = true;
-        overrideAlphaValue = 128;
-
-        render();
-
-        overrideAlpha = false;
-    }*/
-
-    /*@Override
-    public boolean shouldRender3DInInventory (int modelId) {
-        return false;
-    }*/
-
-    /*@Override
-    protected void drawVertex(Vertex vertex, int number, RenderParameters params)
-    {
-        if (vertex == null)
-            vertex = new Vertex(0, 0, 0);
-
-        // brightness
-        int brightness = calcVertexBrightness(vertex, number, params);
-        vertex.setBrightness(brightness);
-
-        // color
-        int color = calcVertexColor(vertex, number, params);
-        vertex.setColor(color);
-
-        // alpha
-        if (params != null && !params.usePerVertexAlpha.get())
-            vertex.setAlpha(params.alpha.get());
-
-        int alpha = overrideAlpha ? overrideAlphaValue : vertex.getAlpha();
-        vertex.setAlpha(alpha);
-
-        if (renderType == RenderType.ITEM)
-            vertex.setNormal(params.direction.get());
-
-        wr.addVertexData(getVertexData(vertex));
-
-        if (params.useTexture.get())
-            t.addVertexWithUV(vertex.getX(), vertex.getY(), vertex.getZ(), vertex.getU(), vertex.getV());
-        else
-            t.addVertex(vertex.getX(), vertex.getY(), vertex.getZ());
-
-        vertexDrawn = true;
-    }*/
 }

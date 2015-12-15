@@ -1,9 +1,9 @@
-tile.door3x3.oak.name=Large Oak Double Doors
-tile.door3x3.spruce.name=Large Spruce Double Doors
-tile.door3x3.birch.name=Large Birch Double Doors
-tile.door3x3.jungle.name=Large Jungle Double Doors
-tile.door3x3.acacia.name=Large Acacia Double Doors
-tile.door3x3.big_oak.name=Large Dark Oak Double Doors
+tile.doors_oak_3x3.name=Large Oak Double Doors
+tile.doors_spruce_3x3.name=Large Spruce Double Doors
+tile.doors_birch_3x3.name=Large Birch Double Doors
+tile.doors_jungle_3x3.name=Large Jungle Double Doors
+tile.doors_acacia_3x3.name=Large Acacia Double Doors
+tile.doors_dark_oak_3x3.name=Large Dark Oak Double Doors
 
-tile.metalDoor3x3.iron.name=Large Iron Double Doors
-tile.metalDoor3x3.rusty.name=Large Rusty Iron Double Doors
+tile.doors_iron_3x3.name=Large Iron Double Doors
+tile.doors_rusty_3x3.name=Large Rusty Iron Double Doors

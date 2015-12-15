@@ -8,7 +8,6 @@ import com.jaquadro.minecraft.bigdoors.core.CommonProxy;
 import net.malisis.core.IMalisisMod;
 import net.malisis.core.configuration.Settings;
 import net.malisis.doors.DoorRegistry;
-import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -41,9 +40,6 @@ public class BigDoors implements IMalisisMod
     public Settings getSettings () {
         return null;
     }
-
-    private static Block door3x3;
-    private static Block metalDoors3x3;
 
     @Mod.Instance(MOD_ID)
     public static BigDoors instance;

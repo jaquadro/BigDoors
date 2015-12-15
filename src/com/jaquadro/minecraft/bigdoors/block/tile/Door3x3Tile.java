@@ -1,20 +1,16 @@
 package com.jaquadro.minecraft.bigdoors.block.tile;
 
 import com.google.common.base.Objects;
-import com.jaquadro.minecraft.bigdoors.block.Door3x3;
 import com.jaquadro.minecraft.bigdoors.block.movement.Door3x3Movement;
-import net.malisis.core.block.BoundingBoxType;
 import net.malisis.core.block.IBlockDirectional;
 import net.malisis.core.util.MBlockState;
 import net.malisis.core.util.TileEntityUtils;
-import net.malisis.core.util.chunkblock.ChunkBlockHandler;
 import net.malisis.core.util.chunkcollision.ChunkCollision;
 import net.malisis.doors.DoorDescriptor;
 import net.malisis.doors.DoorRegistry;
 import net.malisis.doors.DoorState;
 import net.malisis.doors.sound.VanillaDoorSound;
 import net.malisis.doors.tileentity.DoorTileEntity;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,11 +22,6 @@ public class Door3x3Tile extends DoorTileEntity
 {
     private IBlockState frameState;
 
-    //private boolean delete = false;
-    //private boolean processed = true;
-    //private EnumFacing direction = EnumFacing.NORTH;
-    //private int woodType;
-
     public Door3x3Tile () {
         DoorDescriptor descriptor = new DoorDescriptor();
         descriptor.setMovement(DoorRegistry.getMovement(Door3x3Movement.class));
@@ -41,14 +32,6 @@ public class Door3x3Tile extends DoorTileEntity
 
         frameState = Blocks.quartz_block.getDefaultState();
     }
-
-    /*public void setDoorType (int meta) {
-        woodType = meta;
-    }
-
-    public int getDoorType () {
-        return woodType;
-    }*/
 
     public IBlockState getFrameState () {
         return frameState;
@@ -104,35 +87,9 @@ public class Door3x3Tile extends DoorTileEntity
             ChunkCollision.get().replaceBlocks(getWorld(), state);
     }
 
-    /*@Override
-    public void updateEntity () {
-        if (!processed && getWorld() != null) {
-            if (delete) {
-                getWorld().setBlockToAir(xCoord, yCoord, zCoord);
-            }
-            else {
-                ChunkBlockHandler.get().updateCoordinates(getWorld().getChunkFromBlockCoords(xCoord, zCoord), xCoord, yCoord, zCoord, Blocks.air, getBlockType());
-                getWorld().setBlockMetadataWithNotify(xCoord, yCoord, zCoord, Door.dirToInt(direction), 2);
-                processed = true;
-            }
-            return;
-        }
-
-        super.updateEntity();
-    }*/
-
     @Override
     public void readFromNBT (NBTTagCompound tag) {
         super.readFromNBT(tag);
-        /*if (tag.hasKey("multiblock")) {
-            MultiBlock mb = new MultiBlock(tag);
-            delete = !mb.isOrigin(xCoord, yCoord, zCoord);
-            direction = mb.getDirection();
-            processed = true;
-        }
-
-        if (tag.hasKey("wood"))
-            woodType = tag.getByte("wood");*/
         frameState = Objects.firstNonNull(MBlockState.fromNBT(tag), Blocks.quartz_block.getDefaultState());
     }
 
@@ -141,14 +98,10 @@ public class Door3x3Tile extends DoorTileEntity
         super.writeToNBT(tag);
 
         MBlockState.toNBT(tag, frameState);
-
-        //if (woodType != 0)
-        //    tag.setByte("wood", (byte)woodType);
     }
 
     @Override
     public AxisAlignedBB getRenderBoundingBox () {
-        //return ((Door3x3) getBlockType()).getBoundingBox(getWorld(), xCoord, yCoord, zCoord, BoundingBoxType.RENDER)[0].offset(xCoord, yCoord, zCoord);
         return TileEntityUtils.getRenderingBounds(this);
     }
 }
