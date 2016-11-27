@@ -1,5 +1,5 @@
 {
-    "rustydoor_opening": {"category": "master","sounds": [{"name": "rustydoor_opening","stream": false}]},
-    "rustydoor_closing": {"category": "master","sounds": [{"name": "rustydoor_closing","stream": false}]},
-    "rustydoor_closed": {"category": "master","sounds": [{"name": "rustydoor_closed","stream": false}]}
+    "rustydoor_opening": {"category": "block","sounds": [{"name": "bigdoors:rustydoor_opening","stream": false}]},
+    "rustydoor_closing": {"category": "block","sounds": [{"name": "bigdoors:rustydoor_closing","stream": false}]},
+    "rustydoor_closed": {"category": "block","sounds": [{"name": "bigdoors:rustydoor_closed","stream": false}]}
 }

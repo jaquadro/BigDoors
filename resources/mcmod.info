@@ -1,6 +1,6 @@
 [
 {
-	"modid": "BigDoors",
+	"modid": "bigdoors",
 	"name": "Big Doors",
 	"description": "Larger 3x3 block double doors in the 6 vanilla wood styles.",
 	"version": "$version",

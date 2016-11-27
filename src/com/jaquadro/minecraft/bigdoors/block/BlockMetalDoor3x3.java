@@ -2,22 +2,21 @@ package com.jaquadro.minecraft.bigdoors.block;
 
 import com.jaquadro.minecraft.bigdoors.BigDoors;
 import com.jaquadro.minecraft.bigdoors.block.tile.MetalDoor3x3Tile;
-import net.malisis.core.renderer.icon.MalisisIcon;
-import net.malisis.core.renderer.icon.provider.IBlockIconProvider;
+import net.malisis.core.MalisisCore;
+import net.malisis.core.renderer.icon.Icon;
+import net.malisis.core.renderer.icon.provider.IIconProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMetalDoor3x3 extends Door3x3
 {
     public enum Type {
-        IRON("doors_iron_3x3", Items.oak_door),
-        RUSTY("doors_rusty_3x3", Items.birch_door);
+        IRON("doors_iron_3x3", Items.OAK_DOOR),
+        RUSTY("doors_rusty_3x3", Items.BIRCH_DOOR);
 
         public String name;
         public Item door;
@@ -28,13 +27,13 @@ public class BlockMetalDoor3x3 extends Door3x3
         }
     }
 
-    private Type type;
-
     public BlockMetalDoor3x3 (Type type) {
-        this(Material.iron);
+        this(Material.IRON);
 
-        this.type = type;
         setName(type.name);
+
+        if (MalisisCore.isClient())
+            addComponent(Door3x3IconProvider.get(type));
     }
 
     protected BlockMetalDoor3x3 (Material material) {
@@ -42,14 +41,8 @@ public class BlockMetalDoor3x3 extends Door3x3
 
         setHardness(5.0f);
         setResistance(200.0f);
-        setStepSound(soundTypeMetal);
+        setSoundType(SoundType.METAL);
         setName("metalDoor3x3");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void createIconProvider (Object object) {
-        iconProvider = new Door3x3IconProvider(type);
     }
 
     @Override
@@ -57,29 +50,27 @@ public class BlockMetalDoor3x3 extends Door3x3
         return new MetalDoor3x3Tile();
     }
 
-    public static class Door3x3IconProvider implements IBlockIconProvider
+    public static class Door3x3IconProvider implements IIconProvider
     {
-        MalisisIcon itemIcon;
-        MalisisIcon doorIcon;
+        Icon itemIcon;
+        Icon doorIcon;
 
         public Door3x3IconProvider (Type type) {
-            itemIcon = new MalisisIcon(BigDoors.MOD_ID + ":items/" + type.name + "_item");
-            doorIcon = new MalisisIcon(BigDoors.MOD_ID + ":blocks/" + type.name);
+            itemIcon = new Icon(BigDoors.MOD_ID + ":items/" + type.name + "_item");
+            doorIcon = new Icon(BigDoors.MOD_ID + ":blocks/" + type.name);
         }
 
         @Override
-        public void registerIcons (TextureMap textureMap) {
-            itemIcon = itemIcon.register(textureMap);
-            doorIcon = doorIcon.register(textureMap);
-        }
-
-        @Override
-        public MalisisIcon getIcon () {
+        public Icon getIcon () {
             return itemIcon;
         }
 
-        public MalisisIcon getDoorIcon () {
+        public Icon getDoorIcon () {
             return doorIcon;
+        }
+
+        public static Door3x3IconProvider get (Type type) {
+            return new Door3x3IconProvider(type);
         }
     }
 }

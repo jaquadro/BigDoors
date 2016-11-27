@@ -5,22 +5,21 @@ import com.jaquadro.minecraft.bigdoors.block.render.Door3x3Renderer;
 import com.jaquadro.minecraft.bigdoors.block.tile.Door3x3Tile;
 import net.malisis.core.MalisisCore;
 import net.malisis.core.block.BoundingBoxType;
-import net.malisis.core.block.IBlockDirectional;
 import net.malisis.core.block.MalisisBlock;
+import net.malisis.core.block.component.DirectionalComponent;
 import net.malisis.core.renderer.DefaultRenderer;
 import net.malisis.core.renderer.MalisisRendered;
-import net.malisis.core.renderer.icon.MalisisIcon;
-import net.malisis.core.renderer.icon.provider.IBlockIconProvider;
+import net.malisis.core.renderer.icon.Icon;
+import net.malisis.core.renderer.icon.provider.IIconProvider;
 import net.malisis.core.util.*;
 import net.malisis.core.util.chunkcollision.ChunkCollision;
 import net.malisis.core.util.chunkcollision.IChunkCollidable;
-import net.malisis.core.util.chunklistener.IBlockListener;
 import net.malisis.doors.block.Door;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,21 +28,24 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @MalisisRendered(block = Door3x3Renderer.class, item = DefaultRenderer.Item.class)
-public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunkCollidable, IBlockListener, IBlockDirectional
+public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunkCollidable
 {
     public enum Type {
-        OAK("doors_oak_3x3", Items.oak_door),
-        SPRUCE("doors_spruce_3x3", Items.spruce_door),
-        BIRCH("doors_birch_3x3", Items.birch_door),
-        JUNGLE("doors_jungle_3x3", Items.jungle_door),
-        ACACIA("doors_acacia_3x3", Items.acacia_door),
-        DARK_OAK("doors_dark_oak_3x3", Items.dark_oak_door);
+        OAK("doors_oak_3x3", Items.OAK_DOOR),
+        SPRUCE("doors_spruce_3x3", Items.SPRUCE_DOOR),
+        BIRCH("doors_birch_3x3", Items.BIRCH_DOOR),
+        JUNGLE("doors_jungle_3x3", Items.JUNGLE_DOOR),
+        ACACIA("doors_acacia_3x3", Items.ACACIA_DOOR),
+        DARK_OAK("doors_dark_oak_3x3", Items.DARK_OAK_DOOR);
 
         public String name;
         public Item door;
@@ -55,13 +57,14 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     }
 
     private AxisAlignedBB defaultBoundingBox = new AxisAlignedBB(-1, 0, 1 - Door.DOOR_WIDTH, 2, 3, 1);
-    private Type type;
 
     public Door3x3 (Type type) {
-        this(Material.wood);
+        this(Material.WOOD);
 
-        this.type = type;
         setName(type.name);
+
+        if (MalisisCore.isClient())
+            addComponent(Door3x3IconProvider.get(type));
     }
 
     protected Door3x3 (Material material) {
@@ -69,15 +72,16 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
 
         setHardness(5.0f);
         setResistance(10.0f);
-        setStepSound(soundTypeWood);
-        setCreativeTab(CreativeTabs.tabRedstone);
+        setSoundType(SoundType.WOOD);
+        setCreativeTab(CreativeTabs.REDSTONE);
+        addComponent(new DirectionalComponent());
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void createIconProvider (Object object) {
-        iconProvider = new Door3x3IconProvider(type);
-    }
+    //@Override
+    //@SideOnly(Side.CLIENT)
+    //public void createIconProvider (Object object) {
+    //    iconProvider = new Door3x3IconProvider(type);
+    //}
 
     @Override
     public void onBlockPlacedBy (World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack itemStack) {
@@ -91,7 +95,7 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     }
 
     @Override
-    public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
             return true;
 
@@ -104,7 +108,7 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     }
 
     @Override
-    public AxisAlignedBB[] getBoundingBoxes (IBlockAccess world, BlockPos pos, BoundingBoxType type) {
+    public AxisAlignedBB[] getBoundingBoxes (IBlockAccess world, BlockPos pos, IBlockState state, BoundingBoxType type) {
         if (type == BoundingBoxType.PLACEDBOUNDINGBOX)
             return new AxisAlignedBB[] { defaultBoundingBox };
 
@@ -113,7 +117,7 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
             return AABBUtils.identities();
 
         AxisAlignedBB[] aabbs = new AxisAlignedBB[] { defaultBoundingBox };
-        if ((type == BoundingBoxType.COLLISION || type == BoundingBoxType.RAYTRACE) && (te.isOpened() || te.isMoving()))
+        if ((type == BoundingBoxType.COLLISION || type == BoundingBoxType.RAYTRACE || type == BoundingBoxType.RENDER) && (te.isOpened() || te.isMoving()))
             aabbs = new AxisAlignedBB[]  {
                 new AxisAlignedBB(-1, 0, -.5f, Door.DOOR_WIDTH - 1, 3, 1),
                 new AxisAlignedBB(2 - Door.DOOR_WIDTH, 0, -.5f, 2, 3, 1)
@@ -133,26 +137,42 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     }
 
     @Override
-    public boolean isOpaqueCube () {
+    public boolean removedByPlayer (IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
+        if (!player.capabilities.isCreativeMode) {
+            Door3x3Tile te = TileEntityUtils.getTileEntity(Door3x3Tile.class, world, pos);
+            if (te != null)
+                spawnAsEntity(world, pos, te.getDroppedItemStack());
+        }
+
+        return super.removedByPlayer(state, world, pos, player, willHarvest);
+    }
+
+    @Override
+    public List<ItemStack> getDrops (IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean isOpaqueCube (IBlockState state) {
         return false;
     }
 
     @Override
-    public boolean isFullCube () {
+    public boolean isFullCube (IBlockState state) {
         return false;
     }
 
     @Override
-    public int getRenderType () {
-        return MalisisCore.malisisRenderType;
+    public EnumBlockRenderType getRenderType (IBlockState state) {
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }
 
     @Override
-    public boolean canRenderInLayer (EnumWorldBlockLayer layer) {
+    public boolean canRenderInLayer (BlockRenderLayer layer) {
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onBlockSet (World world, BlockPos pos, MBlockState state) {
         if (!state.getBlock().isReplaceable(world, state.getPos()))
             return true;
@@ -168,42 +188,40 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     @Override
     public boolean onBlockRemoved (World world, BlockPos pos, BlockPos blockRemoved) {
         return true;
-    }
+    }*/
 
     @Override
-    public void onNeighborBlockChange (World worldIn, BlockPos pos, IBlockState state, Block neighbor) {
+    public void neighborChanged (IBlockState state, World worldIn, BlockPos pos, Block neighbor) {
         Door3x3Tile te = TileEntityUtils.getTileEntity(Door3x3Tile.class, worldIn, pos);
         if (te == null)
             return;
 
         boolean powered = te.isPowered();
-        if ((powered || neighbor.canProvidePower()) && neighbor != this)
+        if ((powered || neighbor.canProvidePower(state)) && neighbor != this)
             te.setPowered(powered);
     }
 
-    public static class Door3x3IconProvider implements IBlockIconProvider
+    public static class Door3x3IconProvider implements IIconProvider
     {
-        MalisisIcon itemIcon;
-        MalisisIcon doorIcon;
+        Icon itemIcon;
+        Icon doorIcon;
 
         public Door3x3IconProvider (Type type) {
-            itemIcon = new MalisisIcon(BigDoors.MOD_ID + ":items/" + type.name + "_item");
-            doorIcon = new MalisisIcon(BigDoors.MOD_ID + ":blocks/" + type.name);
+            itemIcon = new Icon(BigDoors.MOD_ID + ":items/" + type.name + "_item");
+            doorIcon = new Icon(BigDoors.MOD_ID + ":blocks/" + type.name);
         }
 
         @Override
-        public void registerIcons (TextureMap textureMap) {
-            itemIcon = itemIcon.register(textureMap);
-            doorIcon = doorIcon.register(textureMap);
-        }
-
-        @Override
-        public MalisisIcon getIcon () {
+        public Icon getIcon () {
             return itemIcon;
         }
 
-        public MalisisIcon getDoorIcon () {
+        public Icon getDoorIcon () {
             return doorIcon;
+        }
+
+        public static Door3x3IconProvider get (Type type) {
+            return new Door3x3IconProvider(type);
         }
     }
 }

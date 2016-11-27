@@ -2,22 +2,26 @@ package com.jaquadro.minecraft.bigdoors.block.tile;
 
 import com.google.common.base.Objects;
 import com.jaquadro.minecraft.bigdoors.block.movement.Door3x3Movement;
-import net.malisis.core.block.IBlockDirectional;
+import net.malisis.core.block.IBoundingBox;
+import net.malisis.core.block.component.DirectionalComponent;
 import net.malisis.core.util.MBlockState;
-import net.malisis.core.util.TileEntityUtils;
 import net.malisis.core.util.chunkcollision.ChunkCollision;
+import net.malisis.core.util.syncer.Sync;
+import net.malisis.core.util.syncer.Syncable;
 import net.malisis.doors.DoorDescriptor;
 import net.malisis.doors.DoorRegistry;
 import net.malisis.doors.DoorState;
-import net.malisis.doors.sound.VanillaDoorSound;
+import net.malisis.doors.sound.WoodenDoorSound;
 import net.malisis.doors.tileentity.DoorTileEntity;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 
+@Syncable("TileEntity")
 public class Door3x3Tile extends DoorTileEntity
 {
     private IBlockState frameState;
@@ -25,12 +29,12 @@ public class Door3x3Tile extends DoorTileEntity
     public Door3x3Tile () {
         DoorDescriptor descriptor = new DoorDescriptor();
         descriptor.setMovement(DoorRegistry.getMovement(Door3x3Movement.class));
-        descriptor.setSound(DoorRegistry.getSound(VanillaDoorSound.class));
+        descriptor.setSound(DoorRegistry.getSound(WoodenDoorSound.class));
         descriptor.setDoubleDoor(false);
         descriptor.setOpeningTime(15);
         setDescriptor(descriptor);
 
-        frameState = Blocks.quartz_block.getDefaultState();
+        frameState = Blocks.QUARTZ_BLOCK.getDefaultState();
     }
 
     public IBlockState getFrameState () {
@@ -44,7 +48,7 @@ public class Door3x3Tile extends DoorTileEntity
 
     @Override
     public EnumFacing getDirection () {
-        return IBlockDirectional.getDirection(worldObj, pos);
+        return DirectionalComponent.getDirection(getWorld(), pos);
     }
 
     @Override
@@ -73,6 +77,7 @@ public class Door3x3Tile extends DoorTileEntity
     }
 
     @Override
+    @Sync("state")
     public void setDoorState (DoorState newState) {
         boolean moving = this.moving;
         MBlockState state = null;
@@ -87,21 +92,30 @@ public class Door3x3Tile extends DoorTileEntity
             ChunkCollision.get().replaceBlocks(getWorld(), state);
     }
 
-    @Override
-    public void readFromNBT (NBTTagCompound tag) {
-        super.readFromNBT(tag);
-        frameState = Objects.firstNonNull(MBlockState.fromNBT(tag), Blocks.quartz_block.getDefaultState());
+    public ItemStack getDroppedItemStack () {
+        ItemStack stack = new ItemStack(this.getBlockType());
+        NBTTagCompound nbt = new NBTTagCompound();
+        MBlockState.toNBT(nbt, this.frameState);
+        stack.setTagCompound(nbt);
+        return stack;
     }
 
     @Override
-    public void writeToNBT (NBTTagCompound tag) {
-        super.writeToNBT(tag);
+    public void readFromNBT (NBTTagCompound tag) {
+        super.readFromNBT(tag);
+        frameState = Objects.firstNonNull(MBlockState.fromNBT(tag), Blocks.QUARTZ_BLOCK.getDefaultState());
+    }
 
+    @Override
+    public NBTTagCompound writeToNBT (NBTTagCompound tag) {
+        super.writeToNBT(tag);
         MBlockState.toNBT(tag, frameState);
+
+        return tag;
     }
 
     @Override
     public AxisAlignedBB getRenderBoundingBox () {
-        return TileEntityUtils.getRenderingBounds(this);
+        return IBoundingBox.getRenderingBounds(getWorld(), pos);
     }
 }

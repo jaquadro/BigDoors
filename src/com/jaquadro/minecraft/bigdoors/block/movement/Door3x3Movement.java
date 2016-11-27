@@ -10,7 +10,7 @@ import net.malisis.doors.DoorState;
 import net.malisis.doors.block.Door;
 import net.malisis.doors.movement.IDoorMovement;
 import net.malisis.doors.tileentity.DoorTileEntity;
-import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.math.AxisAlignedBB;
 
 public class Door3x3Movement implements IDoorMovement
 {

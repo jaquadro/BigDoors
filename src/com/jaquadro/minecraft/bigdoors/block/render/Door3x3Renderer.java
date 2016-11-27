@@ -4,6 +4,7 @@ import com.jaquadro.minecraft.bigdoors.block.BlockMetalDoor3x3;
 import com.jaquadro.minecraft.bigdoors.block.Door3x3;
 import com.jaquadro.minecraft.bigdoors.block.tile.Door3x3Tile;
 import com.jaquadro.minecraft.bigdoors.block.tile.MetalDoor3x3Tile;
+import net.malisis.core.block.IComponent;
 import net.malisis.core.renderer.MalisisRenderer;
 import net.malisis.core.renderer.RenderParameters;
 import net.malisis.core.renderer.RenderType;
@@ -16,7 +17,7 @@ import net.malisis.doors.block.Door;
 import net.minecraft.util.EnumFacing;
 import org.lwjgl.opengl.GL11;
 
-public class Door3x3Renderer extends MalisisRenderer
+public class Door3x3Renderer extends MalisisRenderer<Door3x3Tile>
 {
     private Door3x3 block;
     private MalisisModel model;
@@ -24,7 +25,6 @@ public class Door3x3Renderer extends MalisisRenderer
     private Shape doorRight;
     private RenderParameters rp;
     private AnimationRenderer ar = new AnimationRenderer();
-    private Door3x3Tile tile;
 
     private EnumFacing direction;
 
@@ -71,8 +71,7 @@ public class Door3x3Renderer extends MalisisRenderer
         if (renderType == RenderType.BLOCK)
             return;
 
-        tile = (Door3x3Tile) super.tileEntity;
-        direction = tile.getDirection();
+        direction = tileEntity.getDirection();
         setup();
 
         if (renderType == RenderType.TILE_ENTITY)
@@ -80,18 +79,19 @@ public class Door3x3Renderer extends MalisisRenderer
     }
 
     private void renderTileEntity () {
-        ar.setStartTime(tile.getTimer().getStart());
+        ar.setStartTime(tileEntity.getTimer().getStart());
 
-        if (tile.getMovement() != null) {
-            Animation[] anims = tile.getMovement().getAnimations(tile, model, rp);
+        if (tileEntity.getMovement() != null) {
+            Animation[] anims = tileEntity.getMovement().getAnimations(tileEntity, model, rp);
             ar.animate(anims);
         }
 
-        next(GL11.GL_POLYGON);
+        //next(GL11.GL_POLYGON);
         if (block.getClass() == Door3x3.class)
-            rp.icon.set(((Door3x3.Door3x3IconProvider) block.getIconProvider()).getDoorIcon());
+            rp.icon.set(IComponent.getComponent(Door3x3.Door3x3IconProvider.class, block).getDoorIcon());
         else if (block.getClass() == BlockMetalDoor3x3.class)
-            rp.icon.set(((BlockMetalDoor3x3.Door3x3IconProvider) block.getIconProvider()).getDoorIcon());
+            rp.icon.set(IComponent.getComponent(BlockMetalDoor3x3.Door3x3IconProvider.class, block).getDoorIcon());
+
         drawShape(doorLeft, rp);
         drawShape(doorRight, rp);
     }
@@ -105,6 +105,6 @@ public class Door3x3Renderer extends MalisisRenderer
         else if (direction == EnumFacing.EAST)
             model.rotate(90, 0, 1, 0, 0, 0, 0);
 
-        rp.brightness.set(block.getMixedBrightnessForBlock(world, pos));
+        rp.brightness.set(blockState.getPackedLightmapCoords(world, pos));
     }
 }

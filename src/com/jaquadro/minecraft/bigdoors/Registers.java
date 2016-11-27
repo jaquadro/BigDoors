@@ -39,12 +39,12 @@ public class Registers
 
         GameRegistry.registerTileEntity(Door3x3Tile.class, "door3x3");
 
-        GameRegistry.addRecipe(new ItemStack(bigDoorOak), "xx", "yy", 'x', Items.oak_door, 'y', new ItemStack(Blocks.planks, 1, 0));
-        GameRegistry.addRecipe(new ItemStack(bigDoorSpruce), "xx", "yy", 'x', Items.spruce_door, 'y', new ItemStack(Blocks.planks, 1, 1));
-        GameRegistry.addRecipe(new ItemStack(bigDoorBirch), "xx", "yy", 'x', Items.birch_door, 'y', new ItemStack(Blocks.planks, 1, 2));
-        GameRegistry.addRecipe(new ItemStack(bigDoorJungle), "xx", "yy", 'x', Items.jungle_door, 'y', new ItemStack(Blocks.planks, 1, 3));
-        GameRegistry.addRecipe(new ItemStack(bigDoorAcacia), "xx", "yy", 'x', Items.acacia_door, 'y', new ItemStack(Blocks.planks, 1, 4));
-        GameRegistry.addRecipe(new ItemStack(bigDoorDarkOak), "xx", "yy", 'x', Items.dark_oak_door, 'y', new ItemStack(Blocks.planks, 1, 5));
+        GameRegistry.addRecipe(new ItemStack(bigDoorOak), "xx", "yy", 'x', Items.OAK_DOOR, 'y', new ItemStack(Blocks.PLANKS, 1, 0));
+        GameRegistry.addRecipe(new ItemStack(bigDoorSpruce), "xx", "yy", 'x', Items.SPRUCE_DOOR, 'y', new ItemStack(Blocks.PLANKS, 1, 1));
+        GameRegistry.addRecipe(new ItemStack(bigDoorBirch), "xx", "yy", 'x', Items.BIRCH_DOOR, 'y', new ItemStack(Blocks.PLANKS, 1, 2));
+        GameRegistry.addRecipe(new ItemStack(bigDoorJungle), "xx", "yy", 'x', Items.JUNGLE_DOOR, 'y', new ItemStack(Blocks.PLANKS, 1, 3));
+        GameRegistry.addRecipe(new ItemStack(bigDoorAcacia), "xx", "yy", 'x', Items.ACACIA_DOOR, 'y', new ItemStack(Blocks.PLANKS, 1, 4));
+        GameRegistry.addRecipe(new ItemStack(bigDoorDarkOak), "xx", "yy", 'x', Items.DARK_OAK_DOOR, 'y', new ItemStack(Blocks.PLANKS, 1, 5));
     }
 
     private static void registerMetalDoors () {
@@ -56,7 +56,7 @@ public class Registers
 
         GameRegistry.registerTileEntity(MetalDoor3x3Tile.class, "metalDoors3x3");
 
-        GameRegistry.addRecipe(new ItemStack(bigDoorIron), "xx", "yy", 'x', Items.iron_door, 'y', Items.iron_ingot);
-        GameRegistry.addRecipe(new ItemStack(bigDoorRusty, 1, 1), "xxx", "xyx", "xxx", 'x', Blocks.dirt, 'y', new ItemStack(bigDoorIron));
+        GameRegistry.addRecipe(new ItemStack(bigDoorIron), "xx", "yy", 'x', Items.IRON_DOOR, 'y', Items.IRON_INGOT);
+        GameRegistry.addRecipe(new ItemStack(bigDoorRusty, 1, 1), "xxx", "xyx", "xxx", 'x', Blocks.DIRT, 'y', new ItemStack(bigDoorIron));
     }
 }

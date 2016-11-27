@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = BigDoors.MOD_ID, name = BigDoors.MOD_NAME, version = BigDoors.MOD_VERSION, dependencies = "required-after:malisiscore; required-after:malisisdoors")
 public class BigDoors implements IMalisisMod
 {
-    public static final String MOD_ID = "BigDoors";
+    public static final String MOD_ID = "bigdoors";
     public static final String MOD_NAME = "Big Doors";
     public static final String MOD_VERSION = "@VERSION@";
     public static final String SOURCE_PATH = "com.jaquadro.minecraft.bigdoors.";

@@ -1,9 +1,11 @@
 package com.jaquadro.minecraft.bigdoors.block.tile;
 
 import com.jaquadro.minecraft.bigdoors.block.sound.RustyDoorSound;
+import net.malisis.core.util.syncer.Syncable;
 import net.malisis.doors.DoorRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 
+@Syncable("TileEntity")
 public class MetalDoor3x3Tile extends Door3x3Tile
 {
     public MetalDoor3x3Tile () {
@@ -16,7 +18,7 @@ public class MetalDoor3x3Tile extends Door3x3Tile
     }
 
     @Override
-    public void writeToNBT (NBTTagCompound tag) {
-        super.writeToNBT(tag);
+    public NBTTagCompound writeToNBT (NBTTagCompound tag) {
+        return super.writeToNBT(tag);
     }
 }
