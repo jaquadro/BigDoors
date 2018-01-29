@@ -40,12 +40,12 @@ import java.util.List;
 public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunkCollidable
 {
     public enum Type {
-        OAK("doors_oak_3x3", Items.OAK_DOOR),
-        SPRUCE("doors_spruce_3x3", Items.SPRUCE_DOOR),
-        BIRCH("doors_birch_3x3", Items.BIRCH_DOOR),
-        JUNGLE("doors_jungle_3x3", Items.JUNGLE_DOOR),
-        ACACIA("doors_acacia_3x3", Items.ACACIA_DOOR),
-        DARK_OAK("doors_dark_oak_3x3", Items.DARK_OAK_DOOR);
+        OAK("oak_doors_33", Items.OAK_DOOR),
+        SPRUCE("spruce_doors_33", Items.SPRUCE_DOOR),
+        BIRCH("birch_doors_33", Items.BIRCH_DOOR),
+        JUNGLE("jungle_doors_33", Items.JUNGLE_DOOR),
+        ACACIA("acacia_doors_33", Items.ACACIA_DOOR),
+        DARK_OAK("dark_oak_doors_33", Items.DARK_OAK_DOOR);
 
         public String name;
         public Item door;
@@ -77,12 +77,6 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
         addComponent(new DirectionalComponent());
     }
 
-    //@Override
-    //@SideOnly(Side.CLIENT)
-    //public void createIconProvider (Object object) {
-    //    iconProvider = new Door3x3IconProvider(type);
-    //}
-
     @Override
     public void onBlockPlacedBy (World world, BlockPos pos, IBlockState state, EntityLivingBase player, ItemStack itemStack) {
         super.onBlockPlacedBy(world, pos, state, player, itemStack);
@@ -95,7 +89,7 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     }
 
     @Override
-    public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated (World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (world.isRemote)
             return true;
 
@@ -168,30 +162,12 @@ public class Door3x3 extends MalisisBlock implements ITileEntityProvider, IChunk
     }
 
     @Override
-    public boolean canRenderInLayer (BlockRenderLayer layer) {
-        return true;
-    }
-
-    /*@Override
-    public boolean onBlockSet (World world, BlockPos pos, MBlockState state) {
-        if (!state.getBlock().isReplaceable(world, state.getPos()))
-            return true;
-
-        for (AxisAlignedBB aabb : AABBUtils.getCollisionBoundingBoxes(world, new MBlockState(pos, this), true)) {
-            if (aabb != null && aabb.intersectsWith(AABBUtils.identity(state.getPos())))
-                return false;
-        }
-
+    public boolean canRenderInLayer (IBlockState state, BlockRenderLayer layer) {
         return true;
     }
 
     @Override
-    public boolean onBlockRemoved (World world, BlockPos pos, BlockPos blockRemoved) {
-        return true;
-    }*/
-
-    @Override
-    public void neighborChanged (IBlockState state, World worldIn, BlockPos pos, Block neighbor) {
+    public void neighborChanged (IBlockState state, World worldIn, BlockPos pos, Block neighbor, BlockPos fromPos) {
         Door3x3Tile te = TileEntityUtils.getTileEntity(Door3x3Tile.class, worldIn, pos);
         if (te == null)
             return;

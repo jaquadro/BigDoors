@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 public class BlockMetalDoor3x3 extends Door3x3
 {
     public enum Type {
-        IRON("doors_iron_3x3", Items.OAK_DOOR),
-        RUSTY("doors_rusty_3x3", Items.BIRCH_DOOR);
+        IRON("iron_doors_33", Items.OAK_DOOR),
+        RUSTY("rusty_iron_doors_33", Items.BIRCH_DOOR);
 
         public String name;
         public Item door;

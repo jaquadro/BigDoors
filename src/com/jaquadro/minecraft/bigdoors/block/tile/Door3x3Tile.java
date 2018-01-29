@@ -1,6 +1,6 @@
 package com.jaquadro.minecraft.bigdoors.block.tile;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.jaquadro.minecraft.bigdoors.block.movement.Door3x3Movement;
 import net.malisis.core.block.IBoundingBox;
 import net.malisis.core.block.component.DirectionalComponent;
@@ -103,7 +103,7 @@ public class Door3x3Tile extends DoorTileEntity
     @Override
     public void readFromNBT (NBTTagCompound tag) {
         super.readFromNBT(tag);
-        frameState = Objects.firstNonNull(MBlockState.fromNBT(tag), Blocks.QUARTZ_BLOCK.getDefaultState());
+        frameState = MoreObjects.firstNonNull(MBlockState.fromNBT(tag), Blocks.QUARTZ_BLOCK.getDefaultState());
     }
 
     @Override
